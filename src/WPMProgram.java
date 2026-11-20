@@ -1,9 +1,8 @@
-import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class WPMProgram {
-    public static String[] words = {"envelope","cantelope","the","hello","microphone","elephant","biscuit","hammer","went","cap"};
+    public static String[] words = {"envelope","cantaloupe","the","hello","microphone","elephant","biscuit","hammer","went","cap"};
 
     public static void main(String[] args) throws InterruptedException{
         System.out.println("3");
@@ -15,18 +14,17 @@ public class WPMProgram {
 
         Random rand = new Random();
         for(int i = 0; i < 10; i++)
-            System.out.print(words[rand.nextInt(9)] + " ");
+            System.out.print(words[rand.nextInt(words.length)] + " ");
         System.out.println();
 
-        double start = LocalTime.now().toNanoOfDay();
-        double end = LocalTime.now().toNanoOfDay();
         Scanner scnr = new Scanner(System.in);
+        long start = System.nanoTime();
+        if (!scnr.hasNextLine()) {
+            return;
+        }
         String typedWords = scnr.nextLine();
-        double elapsedTime = end - start;
-        double seconds = elapsedTime / 1000000000.0;
-        int numChars = typedWords.length();
-        // (x characters / 5) / 1min = y WPM
-        int wpm = (int) ((((double)numChars / 5) / seconds) * 60);
+        double seconds = (System.nanoTime() - start) / 1_000_000_000.0;
+        int wpm = (int) (typedWords.length() / 5.0 * 60 / seconds);
         System.out.println("Your wpm is "+wpm+"!");
     }
 }
